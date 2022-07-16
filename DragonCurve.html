@@ -1,0 +1,58 @@
+<html>
+<head>
+<link rel="icon" href="icon.gif">
+<title>Драконова крива</title>
+<script type='text/javascript'>
+function frDragon(cID) {
+  var dim=document.getElementById('dimID').value;
+  var scl=document.getElementById('sclID').value;
+  var lf=document.getElementById('lfID').value;
+  var tp=document.getElementById('tpID').value;
+  var clr=document.getElementById('clrID').value;
+  var c=c1=c2=c2x=c2y=x=y=0, d=1, dim=1<<dim;
+  var cvs=document.getElementById(cID);
+  var ctx=cvs.getContext("2d");
+  lf=Number(lf);
+  tp=Number(tp);
+  x=y=cvs.width/2;
+  ctx.fillStyle="white"; 
+  ctx.fillRect(0,0,cvs.width,cvs.height);
+  ctx.beginPath();
+  for(i=0; i<=dim;) {
+    ctx.lineTo((x+lf)*scl,(y+tp)*scl);
+    c1=c&1; 
+    c2=c&2;
+    c2x=1*d; 
+    if(c2>0) {
+      c2x=(-1)*d;
+    } 
+      c2y=(-1)*c2x;
+    if(c1>0) {
+      y+=c2y
+    } else {
+      x+=c2x
+    }
+    i++; 
+    c+=i/(i&-i);
+  }
+  ctx.strokeStyle = clr;  
+  ctx.stroke();
+}
+</script>
+</head>
+<body style="background-color: #999900; font-size: 17;">
+<p align="center" style="color: #660066;font-family: arial; font-size: 24; margin-top: 25px;"><b>Въведете размерност, мащаб, изместване отляво, изместване отгоре, цвят:</b></p>
+<div align="center">
+<input id=dimID value=11 type="number" min="0" max="17" size="2" style="height: 25px; width: 120px;">
+<input id=sclID value=7.0 type="number" min="0.001" max="10" size="5" style="height: 25px; width: 120px;">
+<input id=lfID value=-304 type="number" min="-50000" max="50000" size="6" style="height: 25px; width: 120px;">
+<input id=tpID value=-304 type="number" min="-50000" max="50000" size="6" style="height: 25px; width: 120px;">
+<input id=clrID value="purple" type="text" size="14" style="height: 25px; width: 120px;">
+<button onclick="frDragon('canvID')" style="height:25px">Изчертаване</button>
+</div>
+<strong><h3 align="center" style="font-size: 30; font-family: arial; color: #660066">Драконова крива</h3></strong>
+<div align="center">
+<canvas id="canvID" width=730 height=640 style="border: 4px outset; background-color: white; border-color: #660066;"></canvas>
+</div>
+</body>
+</html>
